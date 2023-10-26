@@ -48,12 +48,16 @@ function App() {
     fetchData();
   };
 
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", function () {
-        navigator.serviceWorker.register("/service-worker.js");
-      });
+  //アップロード
+  const uploadData = () => {
+    if (!navigator.onLine) {
+      alert("ネットワークに接続されていません！");
+    } else {
+      alert("ネットワークに接続されているのでアップロードします！");
     }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -117,6 +121,15 @@ function App() {
               onClick={saveData}
             >
               登録
+            </button>
+          </div>
+          <div className="mb-10">
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              onClick={uploadData}
+            >
+              アップロード
             </button>
           </div>
         </div>

@@ -80,17 +80,44 @@ self.addEventListener("message", (event) => {
 
 // Any other custom service worker logic can go here.
 
-// キャッシュクリア
-self.addEventListener("activate", (event) => {
+// self.addEventListener("install", function (event) {
+//   event.waitUntil(
+//     caches.open("your-cache-name").then(function (cache) {
+//       return cache.addAll([
+//         "/",
+//         "/index.html",
+//         "/styles.css",
+//         "/script.js",
+//         // 他にキャッシュしたいリソース
+//       ]);
+//     })
+//   );
+// });
+
+self.addEventListener("fetch", function (event) {
+  event.respondWith(
+    caches.match(event.request).then(function (response) {
+      // キャッシュがあればレスポンスを返す
+      if (response) {
+        return response;
+      }
+      return fetch(event.request);
+    })
+  );
+});
+
+self.addEventListener("activate", function (event) {
+  var cacheWhitelist = ["your-cache-name"];
+
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
+    caches.keys().then(function (cacheNames) {
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== "your-cache-name") {
+        cacheNames.map(function (cacheName) {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            // ホワイトリストにないキャッシュを削除する
             return caches.delete(cacheName);
-          } else {
-            return Promise.resolve(true);
           }
+          return null;
         })
       );
     })
