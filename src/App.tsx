@@ -65,18 +65,17 @@ function App() {
   register({
     onUpdate: (registration) => {
       // ここでユーザーに更新を通知します。
-      // 例えば、確認ダイアログを表示することができます。
-      const answer = window.confirm(
-        "新しいバージョンが利用可能です。更新しますか？"
-      );
-      if (answer === true) {
-        if (registration && registration.waiting) {
-          // Service Workerの更新を強制します。
-          registration.waiting.postMessage({ type: "SKIP_WAITING" });
-        }
-        // ページをリロードして新しいバージョンを適用します。
-        window.location.reload();
+      // const answer = window.confirm(
+      //   "新しいバージョンが利用可能です。更新しますか？"
+      // );
+      // if (answer === true) {
+      if (registration && registration.waiting) {
+        // Service Workerの更新を強制します。
+        registration.waiting.postMessage({ type: "SKIP_WAITING" });
       }
+      // ページをリロードして新しいバージョンを適用します。
+      window.location.reload();
+      // }
     },
   });
 
