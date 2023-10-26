@@ -67,7 +67,7 @@ function App() {
             <div>
               <div className="flex items-center justify-between">
                 <label
-                  htmlFor="password"
+                  htmlFor="name"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   名前
