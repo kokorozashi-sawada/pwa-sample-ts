@@ -40,7 +40,6 @@ function App() {
   const fetchData = async () => {
     const value = await db.items.toArray();
     setDataList(value);
-    console.log(value);
   };
 
   // データの削除
