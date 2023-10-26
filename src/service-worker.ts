@@ -94,32 +94,39 @@ self.addEventListener("message", (event) => {
 //   );
 // });
 
-self.addEventListener("fetch", function (event) {
-  event.respondWith(
-    caches.match(event.request).then(function (response) {
-      // キャッシュがあればレスポンスを返す
-      if (response) {
-        return response;
-      }
-      return fetch(event.request);
-    })
-  );
-});
+// self.addEventListener("fetch", function (event) {
+//   event.respondWith(
+//     caches.match(event.request).then(function (response) {
+//       // キャッシュがあればレスポンスを返す
+//       if (response) {
+//         return response;
+//       }
+//       return fetch(event.request);
+//     })
+//   );
+// });
 
-self.addEventListener("activate", function (event) {
-  var cacheWhitelist = ["your-cache-name"];
+// self.addEventListener("activate", function (event) {
+//   var cacheWhitelist = ["your-cache-name"];
 
-  event.waitUntil(
-    caches.keys().then(function (cacheNames) {
-      return Promise.all(
-        cacheNames.map(function (cacheName) {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            // ホワイトリストにないキャッシュを削除する
-            return caches.delete(cacheName);
-          }
-          return null;
-        })
-      );
-    })
-  );
+//   event.waitUntil(
+//     caches.keys().then(function (cacheNames) {
+//       return Promise.all(
+//         cacheNames.map(function (cacheName) {
+//           if (cacheWhitelist.indexOf(cacheName) === -1) {
+//             // ホワイトリストにないキャッシュを削除する
+//             return caches.delete(cacheName);
+//           }
+//           return null;
+//         })
+//       );
+//     })
+//   );
+// });
+
+//アップデート検知
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
