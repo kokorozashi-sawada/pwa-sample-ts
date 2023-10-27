@@ -64,7 +64,6 @@ function App() {
 
   register({
     onUpdate: (registration) => {
-      // ここでユーザーに更新を通知します。
       // const answer = window.confirm(
       //   "新しいバージョンが利用可能です。更新しますか？"
       // );
