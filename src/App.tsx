@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Dexie, { Table } from "dexie";
 import "./App.css";
 import { register } from "./serviceWorkerRegistration";
